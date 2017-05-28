@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "equimper",
+    "prettier"
+  ],
+  "rules": {
+    "react/sort-comp": 0,
+    "react/no-multi-comp": 0
+  },
+  "globals": {
+    "ReactElement": false,
+    "ReactClass": false
+  }
+}
