@@ -20,23 +20,23 @@ able to provide the dimensions.
 
 This component supports most of the props of `FlatList` plus a few extras one:
 
-### `getHeightForItem: ({ item: any, index: number }) => number,`
+#### `getHeightForItem: ({ item: any, index: number }) => number,`
 
 Returns the height for a specific item. Note that this it *not* optional for now.
 
-### `numColumns: number`
+#### `numColumns: number`
 
 The number of columns.
 
-### `renderItem: ({ item: any, index: number, column: number }) => ?ReactElement<*>,`
+#### `renderItem: ({ item: any, index: number, column: number }) => ?ReactElement<*>,`
 
 Same as `renderItem` from `FlatList` but also gets passed the column index.
 
 ## Example
 
-Play with on [Expo](https://exp.host/@appandflow/masonry-list)
+Play with on [Expo](https://exp.host/@appandflow/masonry-list-example)
 
-Take a look at example folder: [Link](https://github.com/AppAndFlow/react-native-masonry-list/blob/master/example)
+Take a look at [example folder](https://github.com/AppAndFlow/react-native-masonry-list/blob/master/example)
 
 ## TODO
 

@@ -1,7 +1,7 @@
 {
-  "name": "touchable",
+  "name": "masonry-list-example",
   "version": "0.0.0",
-  "description": "Hello Expo!",
+  "description": "React Native MasonryList example",
   "author": null,
   "private": true,
   "main": "main.js",
