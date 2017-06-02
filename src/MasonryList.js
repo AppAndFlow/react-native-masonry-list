@@ -49,12 +49,17 @@ type Props = {
   >,
   getHeightForItem: ({ item: any, index: number }) => number,
   ListHeaderComponent?: ?ReactClass<any>,
-  keyExtractor: (item: any, index: number) => string,
+  /**
+   * Used to extract a unique key for a given item at the specified index. Key is used for caching
+   * and as the react key to track item re-ordering. The default extractor checks `item.key`, then
+   * falls back to using the index, like React does.
+   */
+  keyExtractor?: (item: any, index: number) => string,
   // onEndReached will get called once per column, not ideal but should not cause
   // issues with isLoading checks.
   onEndReached?: ?(info: { distanceFromEnd: number }) => void,
   contentContainerStyle?: any,
-  onEndReachedThreshold: number,
+  onEndReachedThreshold?: ?number,
   scrollEventThrottle: number,
   renderScrollComponent: (props: Object) => ReactElement<*>,
   /**
@@ -81,6 +86,7 @@ class FakeScrollView extends Component {
 export default class MasonryList extends Component {
   static defaultProps = {
     scrollEventThrottle: 50,
+    numColumns: 1,
     renderScrollComponent: (props: Props) => {
       if (props.onRefresh) {
         return (
