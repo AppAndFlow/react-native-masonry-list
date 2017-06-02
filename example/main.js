@@ -37,9 +37,20 @@ class Cell extends PureComponent {
 }
 
 class App extends Component {
+  state = { isRefreshing: false };
+
+  _refreshRequest = () => {
+    this.setState({ isRefreshing: true });
+    setTimeout(() => {
+      this.setState({ isRefreshing: false });
+    }, 1000);
+  };
+
   render() {
     return (
       <MasonryList
+        onRefresh={this._refreshRequest}
+        refreshing={this.state.isRefreshing}
         data={DATA}
         renderItem={({ item }) => <Cell item={item} />}
         getHeightForItem={({ item }) => item.height + 2}

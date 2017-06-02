@@ -1,12 +1,13 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component, cloneElement } from 'react';
 import {
   VirtualizedList,
   View,
   ScrollView,
   StyleSheet,
   findNodeHandle,
+  RefreshControl,
 } from 'react-native';
 
 type Column = {
@@ -55,6 +56,16 @@ type Props = {
   contentContainerStyle?: any,
   onEndReachedThreshold: number,
   scrollEventThrottle: number,
+  renderScrollComponent: (props: Object) => ReactElement<*>,
+  /**
+   * Set this true while waiting for new data from a refresh.
+   */
+  refreshing?: ?boolean,
+  /**
+   * If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make
+   * sure to also set the `refreshing` prop correctly.
+   */
+  onRefresh?: ?Function,
 };
 
 // This will get cloned and added a bunch of props that are supposed to be on
@@ -70,6 +81,22 @@ class FakeScrollView extends Component {
 export default class MasonryList extends Component {
   static defaultProps = {
     scrollEventThrottle: 50,
+    renderScrollComponent: (props: Props) => {
+      if (props.onRefresh) {
+        return (
+          <ScrollView
+            {...props}
+            refreshControl={
+              <RefreshControl
+                refreshing={props.refreshing}
+                onRefresh={props.onRefresh}
+              />
+            }
+          />
+        );
+      }
+      return <ScrollView {...props} />;
+    },
   };
 
   props: Props;
@@ -157,6 +184,8 @@ export default class MasonryList extends Component {
 
   _getItem = (data, index) => data[index];
 
+  _captureScrollRef = ref => (this._scrollRef = ref);
+
   render() {
     const {
       renderItem,
@@ -164,67 +193,61 @@ export default class MasonryList extends Component {
       keyExtractor,
       onEndReached,
       contentContainerStyle,
-      scrollEventThrottle,
-      ...others
     } = this.props;
     let headerElement;
     if (ListHeaderComponent) {
       headerElement = (
-        <View
-          onLayout={this._onHeaderLayout}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-          }}
-        >
+        <View onLayout={this._onHeaderLayout} style={styles.header}>
           <ListHeaderComponent />
         </View>
       );
     }
 
-    return (
-      <ScrollView
-        {...others}
-        ref={ref => (this._scrollRef = ref)}
-        removeClippedSubviews={false}
-        onContentSizeChange={this._onContentSizeChange}
-        onLayout={this._onLayout}
-        onScroll={this._onScroll}
-        onScrollBeginDrag={this._onScrollBeginDrag}
-        onScrollEndDrag={this._onScrollEndDrag}
-        onMomentumScrollEnd={this._onMomentumScrollEnd}
-        scrollEventThrottle={scrollEventThrottle}
-      >
-        <View style={styles.contentContainer}>
-          {(!headerElement || this.state.headerHeight !== null) &&
-            this.state.columns.map(col => (
-              <VirtualizedList
-                ref={ref => (this._listRefs[col.index] = ref)}
-                key={`$col_${col.index}`}
-                contentContainerStyle={contentContainerStyle}
-                data={col.data}
-                getItemCount={this._getItemCount}
-                getItem={this._getItem}
-                getItemLayout={(data, index) =>
-                  this._getItemLayout(col.index, index)}
-                renderItem={({ item, index }) =>
-                  renderItem({ item, index, column: col.index })}
-                renderScrollComponent={this._renderScrollComponent}
-                keyExtractor={keyExtractor}
-                ListHeaderComponent={
-                  headerElement && this._renderPlaceholderHeader
-                }
-                onEndReached={onEndReached}
-                onEndReachedThreshold={this.props.onEndReachedThreshold}
-                removeClippedSubviews={false}
-              />
-            ))}
-        </View>
-        {headerElement}
-      </ScrollView>
+    const content = (
+      <View style={styles.contentContainer}>
+        {(!headerElement || this.state.headerHeight !== null) &&
+          this.state.columns.map(col => (
+            <VirtualizedList
+              ref={ref => (this._listRefs[col.index] = ref)}
+              key={`$col_${col.index}`}
+              contentContainerStyle={contentContainerStyle}
+              data={col.data}
+              getItemCount={this._getItemCount}
+              getItem={this._getItem}
+              getItemLayout={(data, index) =>
+                this._getItemLayout(col.index, index)}
+              renderItem={({ item, index }) =>
+                renderItem({ item, index, column: col.index })}
+              renderScrollComponent={this._renderScrollComponent}
+              keyExtractor={keyExtractor}
+              ListHeaderComponent={
+                headerElement && this._renderPlaceholderHeader
+              }
+              onEndReached={onEndReached}
+              onEndReachedThreshold={this.props.onEndReachedThreshold}
+              removeClippedSubviews={false}
+            />
+          ))}
+      </View>
     );
+
+    const scrollComponent = cloneElement(
+      this.props.renderScrollComponent(this.props),
+      {
+        ref: this._captureScrollRef,
+        removeClippedSubviews: false,
+        onContentSizeChange: this._onContentSizeChange,
+        onLayout: this._onLayout,
+        onScroll: this._onScroll,
+        onScrollBeginDrag: this._onScrollBeginDrag,
+        onScrollEndDrag: this._onScrollEndDrag,
+        onMomentumScrollEnd: this._onMomentumScrollEnd,
+      },
+      content,
+      headerElement,
+    );
+
+    return scrollComponent;
   }
 }
 
@@ -234,5 +257,11 @@ const styles = StyleSheet.create({
   },
   column: {
     flex: 1,
+  },
+  header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
   },
 });
