@@ -249,8 +249,8 @@ export default class MasonryList extends Component {
         onScrollEndDrag: this._onScrollEndDrag,
         onMomentumScrollEnd: this._onMomentumScrollEnd,
       },
-      content,
       headerElement,
+      content,
     );
 
     return scrollComponent;
