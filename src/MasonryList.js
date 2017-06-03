@@ -41,7 +41,7 @@ const _stateFromProps = ({ numColumns, data, getHeightForItem }) => {
   return { columns };
 };
 
-type Props = {
+export type Props = {
   data: Array<any>,
   numColumns: number,
   renderItem: ({ item: any, index: number, column: number }) => ?ReactElement<
@@ -61,7 +61,7 @@ type Props = {
   contentContainerStyle?: any,
   onEndReachedThreshold?: ?number,
   scrollEventThrottle: number,
-  renderScrollComponent: (props: Object) => ReactElement<*>,
+  renderScrollComponent: (props: Object) => ReactElement<any>,
   /**
    * Set this true while waiting for new data from a refresh.
    */
@@ -250,6 +250,7 @@ export default class MasonryList extends Component {
         onMomentumScrollEnd: this._onMomentumScrollEnd,
       },
       headerElement,
+      // $FlowFixMe(>=0.47.0)
       content,
     );
 

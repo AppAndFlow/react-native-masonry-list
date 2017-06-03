@@ -32,7 +32,8 @@
     "lint": "eslint src",
     "precommit": "lint-staged",
     "flow": "flow check",
-    "test": "jest"
+    "test": "jest",
+    "ci": "yarn lint && yarn flow && yarn test"
   },
   "jest": {
     "preset": "jest-expo",
