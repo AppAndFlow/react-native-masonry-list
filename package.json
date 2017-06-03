@@ -34,6 +34,12 @@
     "flow": "flow check",
     "test": "jest"
   },
+  "jest": {
+    "preset": "jest-expo",
+    "modulePathIgnorePatterns": [
+      "example"
+    ]
+  },
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
@@ -56,12 +62,5 @@
   },
   "dependencies": {
     "react-test-renderer": "^15.5.4"
-  },
-  "jest": {
-    "preset": "jest-expo",
-    "testRegex": "./src/.*\\-test\\.js$",
-    "modulePathIgnorePatterns": [
-      "example"
-    ]
   }
 }

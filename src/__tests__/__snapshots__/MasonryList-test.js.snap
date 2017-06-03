@@ -39,7 +39,7 @@ exports[`MasonryList renders correctly 1`] = `
 </RCTScrollView>
 `;
 
-exports[`MasonryList should render a list with header 1`] = `
+exports[`MasonryList should render a header 1`] = `
 <RCTScrollView
   ListHeaderComponent={[Function]}
   data={
