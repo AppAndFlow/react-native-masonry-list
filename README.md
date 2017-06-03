@@ -1,5 +1,7 @@
 # @appandflow/masonry-list
 
+[![npm (scoped)](https://img.shields.io/npm/v/@appandflow/masonry-list.svg)](https://www.npmjs.com/package/@appandflow/masonry-list) [![Travis branch](https://img.shields.io/travis/AppAndFlow/react-native-masonry-list/master.svg)](https://travis-ci.org/AppAndFlow/react-native-masonry-list)
+
 Allows creating masonry style list layouts in a performant way.
 
 This component leverages `FlatList` to render performant masonry layout lists. The
