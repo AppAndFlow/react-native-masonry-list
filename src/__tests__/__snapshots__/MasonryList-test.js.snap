@@ -70,6 +70,13 @@ exports[`MasonryList should render a header 1`] = `
 >
   <View>
     <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    />
+    <View
       onLayout={[Function]}
       style={
         Object {
@@ -82,13 +89,6 @@ exports[`MasonryList should render a header 1`] = `
     >
       <header />
     </View>
-    <View
-      style={
-        Object {
-          "flexDirection": "row",
-        }
-      }
-    />
   </View>
 </RCTScrollView>
 `;

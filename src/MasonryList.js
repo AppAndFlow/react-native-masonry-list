@@ -249,9 +249,9 @@ export default class MasonryList extends Component {
         onScrollEndDrag: this._onScrollEndDrag,
         onMomentumScrollEnd: this._onMomentumScrollEnd,
       },
-      headerElement,
-      // $FlowFixMe(>=0.47.0)
       content,
+      // $FlowFixMe(>=0.47.0)
+      headerElement,
     );
 
     return scrollComponent;
