@@ -178,9 +178,7 @@ export default class MasonryList extends Component {
     return { length: column.heights[rowIndex], offset, index: rowIndex };
   };
 
-  _renderScrollComponent = () => (
-    <FakeScrollView style={[this.props.contentContainerStyle, styles.column]} />
-  );
+  _renderScrollComponent = () => <FakeScrollView style={styles.column} />;
 
   _renderPlaceholderHeader = () => (
     <View style={{ height: this.state.headerHeight }} />
@@ -198,7 +196,6 @@ export default class MasonryList extends Component {
       ListHeaderComponent,
       keyExtractor,
       onEndReached,
-      contentContainerStyle,
     } = this.props;
     let headerElement;
     if (ListHeaderComponent) {
@@ -216,7 +213,6 @@ export default class MasonryList extends Component {
             <VirtualizedList
               ref={ref => (this._listRefs[col.index] = ref)}
               key={`$col_${col.index}`}
-              contentContainerStyle={contentContainerStyle}
               data={col.data}
               getItemCount={this._getItemCount}
               getItem={this._getItem}

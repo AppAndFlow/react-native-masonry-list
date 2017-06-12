@@ -26,12 +26,9 @@ exports[`MasonryList renders correctly 1`] = `
     >
       <View
         style={
-          Array [
-            undefined,
-            Object {
-              "flex": 1,
-            },
-          ]
+          Object {
+            "flex": 1,
+          }
         }
       />
     </View>
@@ -131,12 +128,9 @@ exports[`MasonryList should render a single column list 1`] = `
     >
       <View
         style={
-          Array [
-            undefined,
-            Object {
-              "flex": 1,
-            },
-          ]
+          Object {
+            "flex": 1,
+          }
         }
       >
         <item
