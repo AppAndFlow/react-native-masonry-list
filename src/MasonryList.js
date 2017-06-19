@@ -196,6 +196,7 @@ export default class MasonryList extends Component {
       ListHeaderComponent,
       keyExtractor,
       onEndReached,
+      ...props
     } = this.props;
     let headerElement;
     if (ListHeaderComponent) {
@@ -211,6 +212,7 @@ export default class MasonryList extends Component {
         {(!headerElement || this.state.headerHeight !== null) &&
           this.state.columns.map(col => (
             <VirtualizedList
+              {...props}
               ref={ref => (this._listRefs[col.index] = ref)}
               key={`$col_${col.index}`}
               data={col.data}
