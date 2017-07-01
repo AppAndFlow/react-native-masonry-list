@@ -66,25 +66,31 @@ exports[`MasonryList should render a header 1`] = `
   scrollEventThrottle={50}
 >
   <View>
+    <header />
     <View
       style={
         Object {
           "flexDirection": "row",
         }
       }
-    />
-    <View
-      onLayout={[Function]}
-      style={
-        Object {
-          "left": 0,
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-        }
-      }
     >
-      <header />
+      <View
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <item
+          value="i1"
+        />
+        <item
+          value="i2"
+        />
+        <item
+          value="i3"
+        />
+      </View>
     </View>
   </View>
 </RCTScrollView>

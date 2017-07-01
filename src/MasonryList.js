@@ -106,7 +106,7 @@ export default class MasonryList extends Component {
   };
 
   props: Props;
-  state = { ..._stateFromProps(this.props), headerHeight: null };
+  state = _stateFromProps(this.props);
   _listRefs: Array<VirtualizedList> = [];
   _scrollRef: ?ScrollView;
   _endsReached = 0;
@@ -165,10 +165,6 @@ export default class MasonryList extends Component {
     );
   };
 
-  _onHeaderLayout = event => {
-    this.setState({ headerHeight: event.nativeEvent.layout.height });
-  };
-
   _getItemLayout = (columnIndex, rowIndex) => {
     const column = this.state.columns[columnIndex];
     let offset = 0;
@@ -179,10 +175,6 @@ export default class MasonryList extends Component {
   };
 
   _renderScrollComponent = () => <FakeScrollView style={styles.column} />;
-
-  _renderPlaceholderHeader = () => (
-    <View style={{ height: this.state.headerHeight }} />
-  );
 
   _getItemCount = data => data.length;
 
@@ -199,37 +191,29 @@ export default class MasonryList extends Component {
     } = this.props;
     let headerElement;
     if (ListHeaderComponent) {
-      headerElement = (
-        <View onLayout={this._onHeaderLayout} style={styles.header}>
-          <ListHeaderComponent />
-        </View>
-      );
+      headerElement = <ListHeaderComponent />;
     }
 
     const content = (
       <View style={styles.contentContainer}>
-        {(!headerElement || this.state.headerHeight !== null) &&
-          this.state.columns.map(col => (
-            <VirtualizedList
-              ref={ref => (this._listRefs[col.index] = ref)}
-              key={`$col_${col.index}`}
-              data={col.data}
-              getItemCount={this._getItemCount}
-              getItem={this._getItem}
-              getItemLayout={(data, index) =>
-                this._getItemLayout(col.index, index)}
-              renderItem={({ item, index }) =>
-                renderItem({ item, index, column: col.index })}
-              renderScrollComponent={this._renderScrollComponent}
-              keyExtractor={keyExtractor}
-              ListHeaderComponent={
-                headerElement && this._renderPlaceholderHeader
-              }
-              onEndReached={onEndReached}
-              onEndReachedThreshold={this.props.onEndReachedThreshold}
-              removeClippedSubviews={false}
-            />
-          ))}
+        {this.state.columns.map(col => (
+          <VirtualizedList
+            ref={ref => (this._listRefs[col.index] = ref)}
+            key={`$col_${col.index}`}
+            data={col.data}
+            getItemCount={this._getItemCount}
+            getItem={this._getItem}
+            getItemLayout={(data, index) =>
+              this._getItemLayout(col.index, index)}
+            renderItem={({ item, index }) =>
+              renderItem({ item, index, column: col.index })}
+            renderScrollComponent={this._renderScrollComponent}
+            keyExtractor={keyExtractor}
+            onEndReached={onEndReached}
+            onEndReachedThreshold={this.props.onEndReachedThreshold}
+            removeClippedSubviews={false}
+          />
+        ))}
       </View>
     );
 
@@ -245,9 +229,9 @@ export default class MasonryList extends Component {
         onScrollEndDrag: this._onScrollEndDrag,
         onMomentumScrollEnd: this._onMomentumScrollEnd,
       },
-      content,
-      // $FlowFixMe(>=0.47.0)
       headerElement,
+      // $FlowFixMe(>=0.47.0)
+      content,
     );
 
     return scrollComponent;
@@ -260,11 +244,5 @@ const styles = StyleSheet.create({
   },
   column: {
     flex: 1,
-  },
-  header: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
   },
 });
