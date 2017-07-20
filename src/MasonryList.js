@@ -59,6 +59,10 @@ export type Props = {
   // issues with isLoading checks.
   onEndReached?: ?(info: { distanceFromEnd: number }) => void,
   contentContainerStyle?: any,
+  onScroll?: (event: Object) => void,
+  onScrollBeginDrag?: (event: Object) => void,
+  onScrollEndDrag?: (event: Object) => void,
+  onMomentumScrollEnd?: (event: Object) => void,
   onEndReachedThreshold?: ?number,
   scrollEventThrottle: number,
   renderScrollComponent: (props: Object) => ReactElement<any>,
@@ -144,22 +148,34 @@ export default class MasonryList extends Component {
   };
 
   _onScroll = event => {
+    if (this.props.onScroll) {
+      this.props.onScroll(event);
+    }
     this._listRefs.forEach(list => list._onScroll(event));
   };
 
   _onScrollBeginDrag = event => {
+    if (this.props.onScrollBeginDrag) {
+      this.props.onScrollBeginDrag(event);
+    }
     this._listRefs.forEach(
       list => list._onScrollBeginDrag && list._onScrollBeginDrag(event),
     );
   };
 
   _onScrollEndDrag = event => {
+    if (this.props.onScrollEndDrag) {
+      this.props.onScrollEndDrag(event);
+    }
     this._listRefs.forEach(
       list => list._onScrollEndDrag && list._onScrollEndDrag(event),
     );
   };
 
   _onMomentumScrollEnd = event => {
+    if (this.props.onMomentumScrollEnd) {
+      this.props.onMomentumScrollEnd(event);
+    }
     this._listRefs.forEach(
       list => list._onMomentumScrollEnd && list._onMomentumScrollEnd(event),
     );
