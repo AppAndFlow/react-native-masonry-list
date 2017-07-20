@@ -140,18 +140,27 @@ export default class MasonryList extends Component {
   }
 
   _onLayout = event => {
-    this._listRefs.forEach(list => list._onLayout(event));
+    this._listRefs.forEach(
+      list => list && list._onLayout && list._onLayout(event),
+    );
   };
 
   _onContentSizeChange = (width, height) => {
-    this._listRefs.forEach(list => list._onContentSizeChange(width, height));
+    this._listRefs.forEach(
+      list =>
+        list &&
+        list._onContentSizeChange &&
+        list._onContentSizeChange(width, height),
+    );
   };
 
   _onScroll = event => {
     if (this.props.onScroll) {
       this.props.onScroll(event);
     }
-    this._listRefs.forEach(list => list._onScroll(event));
+    this._listRefs.forEach(
+      list => list && list._onScroll && list._onScroll(event),
+    );
   };
 
   _onScrollBeginDrag = event => {
@@ -159,7 +168,7 @@ export default class MasonryList extends Component {
       this.props.onScrollBeginDrag(event);
     }
     this._listRefs.forEach(
-      list => list._onScrollBeginDrag && list._onScrollBeginDrag(event),
+      list => list && list._onScrollBeginDrag && list._onScrollBeginDrag(event),
     );
   };
 
@@ -168,7 +177,7 @@ export default class MasonryList extends Component {
       this.props.onScrollEndDrag(event);
     }
     this._listRefs.forEach(
-      list => list._onScrollEndDrag && list._onScrollEndDrag(event),
+      list => list && list._onScrollEndDrag && list._onScrollEndDrag(event),
     );
   };
 
@@ -177,7 +186,8 @@ export default class MasonryList extends Component {
       this.props.onMomentumScrollEnd(event);
     }
     this._listRefs.forEach(
-      list => list._onMomentumScrollEnd && list._onMomentumScrollEnd(event),
+      list =>
+        list && list._onMomentumScrollEnd && list._onMomentumScrollEnd(event),
     );
   };
 
