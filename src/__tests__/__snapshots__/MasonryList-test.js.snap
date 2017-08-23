@@ -81,15 +81,30 @@ exports[`MasonryList should render a header 1`] = `
           }
         }
       >
-        <item
-          value="i1"
-        />
-        <item
-          value="i2"
-        />
-        <item
-          value="i3"
-        />
+        <View
+          onLayout={undefined}
+          style={null}
+        >
+          <item
+            value="i1"
+          />
+        </View>
+        <View
+          onLayout={undefined}
+          style={null}
+        >
+          <item
+            value="i2"
+          />
+        </View>
+        <View
+          onLayout={undefined}
+          style={null}
+        >
+          <item
+            value="i3"
+          />
+        </View>
       </View>
     </View>
   </View>
@@ -139,15 +154,30 @@ exports[`MasonryList should render a single column list 1`] = `
           }
         }
       >
-        <item
-          value="i1"
-        />
-        <item
-          value="i2"
-        />
-        <item
-          value="i3"
-        />
+        <View
+          onLayout={undefined}
+          style={null}
+        >
+          <item
+            value="i1"
+          />
+        </View>
+        <View
+          onLayout={undefined}
+          style={null}
+        >
+          <item
+            value="i2"
+          />
+        </View>
+        <View
+          onLayout={undefined}
+          style={null}
+        >
+          <item
+            value="i3"
+          />
+        </View>
       </View>
     </View>
   </View>

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component, cloneElement } from 'react';
+import * as React from 'react';
 import {
   VirtualizedList,
   View,
@@ -44,11 +44,11 @@ const _stateFromProps = ({ numColumns, data, getHeightForItem }) => {
 export type Props = {
   data: Array<any>,
   numColumns: number,
-  renderItem: ({ item: any, index: number, column: number }) => ?ReactElement<
-    *,
+  renderItem: ({ item: any, index: number, column: number }) => ?React.Element<
+    any,
   >,
   getHeightForItem: ({ item: any, index: number }) => number,
-  ListHeaderComponent?: ?ReactClass<any>,
+  ListHeaderComponent?: ?React.ComponentType<any>,
   /**
    * Used to extract a unique key for a given item at the specified index. Key is used for caching
    * and as the react key to track item re-ordering. The default extractor checks `item.key`, then
@@ -65,7 +65,7 @@ export type Props = {
   onMomentumScrollEnd?: (event: Object) => void,
   onEndReachedThreshold?: ?number,
   scrollEventThrottle: number,
-  renderScrollComponent: (props: Object) => ReactElement<any>,
+  renderScrollComponent: (props: Object) => React.Element<any>,
   /**
    * Set this true while waiting for new data from a refresh.
    */
@@ -76,23 +76,29 @@ export type Props = {
    */
   onRefresh?: ?Function,
 };
+type State = {
+  columns: Array<Column>,
+};
 
 // This will get cloned and added a bunch of props that are supposed to be on
 // ScrollView so we wan't to make sure we don't pass them over (especially
 // onLayout since it exists on both).
-class FakeScrollView extends Component {
-  props: { style?: any, children?: any };
+class FakeScrollView extends React.Component<{ style?: any, children?: any }> {
   render() {
-    return <View style={this.props.style}>{this.props.children}</View>;
+    return (
+      <View style={this.props.style}>
+        {this.props.children}
+      </View>
+    );
   }
 }
 
-export default class MasonryList extends Component {
+export default class MasonryList extends React.Component<Props, State> {
   static defaultProps = {
     scrollEventThrottle: 50,
     numColumns: 1,
     renderScrollComponent: (props: Props) => {
-      if (props.onRefresh) {
+      if (props.onRefresh && props.refreshing != null) {
         return (
           <ScrollView
             {...props}
@@ -109,9 +115,8 @@ export default class MasonryList extends Component {
     },
   };
 
-  props: Props;
   state = _stateFromProps(this.props);
-  _listRefs: Array<VirtualizedList> = [];
+  _listRefs: Array<?VirtualizedList> = [];
   _scrollRef: ?ScrollView;
   _endsReached = 0;
 
@@ -223,7 +228,7 @@ export default class MasonryList extends Component {
 
     const content = (
       <View style={styles.contentContainer}>
-        {this.state.columns.map(col => (
+        {this.state.columns.map(col =>
           <VirtualizedList
             {...props}
             ref={ref => (this._listRefs[col.index] = ref)}
@@ -240,12 +245,12 @@ export default class MasonryList extends Component {
             onEndReached={onEndReached}
             onEndReachedThreshold={this.props.onEndReachedThreshold}
             removeClippedSubviews={false}
-          />
-        ))}
+          />,
+        )}
       </View>
     );
 
-    const scrollComponent = cloneElement(
+    const scrollComponent = React.cloneElement(
       this.props.renderScrollComponent(this.props),
       {
         ref: this._captureScrollRef,
@@ -258,7 +263,6 @@ export default class MasonryList extends Component {
         onMomentumScrollEnd: this._onMomentumScrollEnd,
       },
       headerElement,
-      // $FlowFixMe(>=0.47.0)
       content,
     );
 

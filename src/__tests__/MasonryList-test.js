@@ -1,9 +1,11 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import renderer from 'react-test-renderer';
 
 import MasonryList from '../MasonryList';
+
+jest.mock('Blob', () => ({})).mock('URL', () => ({}));
 
 describe('MasonryList', () => {
   it('renders correctly', () => {

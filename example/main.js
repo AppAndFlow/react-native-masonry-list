@@ -1,4 +1,4 @@
-// @flow
+// @noflow
 
 import Expo from 'expo';
 import React, { Component, PureComponent } from 'react';
