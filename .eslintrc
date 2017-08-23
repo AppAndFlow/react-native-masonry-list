@@ -10,5 +10,6 @@
   "globals": {
     "ReactElement": false,
     "ReactClass": false
+    "jest": false
   }
 }
