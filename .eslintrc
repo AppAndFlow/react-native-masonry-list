@@ -9,7 +9,7 @@
   },
   "globals": {
     "ReactElement": false,
-    "ReactClass": false
+    "ReactClass": false,
     "jest": false
   }
 }
