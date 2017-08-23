@@ -48,7 +48,7 @@
     "babel-preset-react-native": "^3.0.1",
     "chalk": "^2.1.0",
     "eslint": "^4.5.0",
-    "eslint-config-equimper": "^2.2.1",
+    "eslint-config-anf": "^0.5.2",
     "eslint-config-prettier": "^2.3.0",
     "flow-bin": "^0.53.1",
     "glob": "^7.1.2",
