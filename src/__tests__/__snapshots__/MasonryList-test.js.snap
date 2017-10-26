@@ -183,3 +183,26 @@ exports[`MasonryList should render a single column list 1`] = `
   </View>
 </RCTScrollView>
 `;
+
+exports[`MasonryList should render empty component 1`] = `
+<RCTScrollView
+  ListEmptyComponent={[Function]}
+  data={Array []}
+  getHeightForItem={[Function]}
+  numColumns={1}
+  onContentSizeChange={[Function]}
+  onLayout={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  removeClippedSubviews={false}
+  renderItem={[Function]}
+  renderScrollComponent={[Function]}
+  scrollEventThrottle={50}
+>
+  <View>
+    <empty />
+  </View>
+</RCTScrollView>
+`;

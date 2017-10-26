@@ -52,4 +52,18 @@ describe('MasonryList', () => {
       .toJSON();
     expect(component).toMatchSnapshot();
   });
+
+  it('should render empty component', () => {
+    const component = renderer
+      .create(
+        <MasonryList
+          data={[]}
+          getHeightForItem={() => 1}
+          ListEmptyComponent={() => <empty />}
+          renderItem={({ item }) => <item value={item.key} />}
+        />,
+      )
+      .toJSON();
+    expect(component).toMatchSnapshot();
+  });
 });
